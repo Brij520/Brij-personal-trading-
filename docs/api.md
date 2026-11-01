@@ -84,8 +84,10 @@ Symbols accept `RELIANCE`, `reliance`, `RELIANCE.NS` and ISINs.
 ] }
 ```
 
-Returns the payoff curve, breakevens, max profit/loss, net premium, and `margin: null` with a
-reason — **margin modelling is not implemented** and is not guessed. `fno_enabled` remains
+Returns the payoff curve, breakevens, max profit/loss, net premium, and a
+`margin_estimate` object. The estimate uses a wide expiry stress grid plus a
+20% short-option notional buffer; it is explicitly **not** exchange SPAN/Exposure
+margin and must not be used as a broker funding requirement. `fno_enabled` remains
 `false`: this endpoint researches structures, it does not build orders.
 
 ## Research

@@ -111,7 +111,7 @@ with Chrome is open the terminal and click through all 18 pages.
 | Live/real-time quotes | No feed subscription; NSE free feed is delayed | Labels data `EOD`/`DELAYED`/`SYNTHETIC` |
 | Financial-statement ingestion (XBRL) | Needs a filing parser + mapping per company | `ProviderUnavailable`; synthetic statements in demo mode only |
 | Corporate actions (splits/bonus) | Not modelled in the cost ledger | Documented as a backtest limitation |
-| Options margin (SPAN/Exposure) | Would require an exchange margin file | Payoff panel reports `margin: null` with a reason |
+| Broker-grade options margin (SPAN/Exposure) | Requires an exchange margin file and broker rules | Payoff panel now provides a clearly labelled stress-based research estimate; broker-grade margin remains unavailable |
 | Futures | Out of scope — `fno_enabled` is a hard `False` | — |
 | Order placement of any kind | **Deliberately absent** | No module, no route, no token with write scope |
 | Broker session management | Same | Read-only credential fields exist but are unused |
@@ -124,8 +124,9 @@ with Chrome is open the terminal and click through all 18 pages.
 
 ## Known defects and rough edges
 
-1. **`market.sector_leaders` is a stub** — it returns sector aggregates, not named leaders with
-   a rationale. It is labelled as such in the payload; it does not pretend to rank companies.
+1. **`market.sector_leaders` is a research ranking, not a recommendation** — it now returns the
+   named top one-month performer in each sector with rank and rationale. It does not account for
+   liquidity, corporate actions or survivorship bias.
 2. **TCS trend-following produces only 3 trades** on the synthetic series — a property of the
    generator, not a bug, but it makes that particular backtest uninformative.
 3. **Walk-forward is stability only.** There is no rolling re-optimisation, and the docstring

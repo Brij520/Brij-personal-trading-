@@ -264,6 +264,7 @@ def _technical_row(registry: DataRegistry, inst: Instrument, benchmark_3m: float
     prior_high_55 = float(frame["high"].rolling(55).max().iloc[-2]) if len(frame) > 56 else close
     ret_3m = close / float(frame["close"].iloc[-64]) - 1 if len(frame) > 64 else 0.0
     ret_6m = close / float(frame["close"].iloc[-127]) - 1 if len(frame) > 127 else 0.0
+    ret_1m = close / float(frame["close"].iloc[-22]) - 1 if len(frame) > 22 else 0.0
     return {
         "symbol": inst.symbol,
         "name": inst.name,
@@ -278,6 +279,7 @@ def _technical_row(registry: DataRegistry, inst: Instrument, benchmark_3m: float
         "volume_ratio": None if row["vol_ratio"] != row["vol_ratio"] else round(float(row["vol_ratio"]), 2),
         "breakout_55d": bool(close > prior_high_55),
         "return_3m_pct": round(ret_3m * 100, 2),
+        "return_1m_pct": round(ret_1m * 100, 2),
         "return_6m_pct": round(ret_6m * 100, 2),
         "relative_strength_3m_pp": round((ret_3m - benchmark_3m) * 100, 2),
         "atr14": round(float(row["atr14"]), 2),
@@ -333,17 +335,44 @@ def run_screener(
             log.warning("screener skipped %s: %s", inst.symbol, exc)
             continue
         row["matches"] = _match_scans(row, scans)
-        if row["matches"]:
+        # Sector leaders are ranked cross-sectionally after all symbols have
+        # been loaded; retain every technical row temporarily for that pass.
+        if row["matches"] or "sector_leaders" in scans:
             rows.append(row)
 
     # sector_leaders needs cross-sectional comparison, so it is applied after.
     if "sector_leaders" in scans:
-        for inst in universe:
-            if any(r["symbol"] == inst.symbol for r in rows):
-                continue
         by_sector: dict[str, list[dict[str, Any]]] = {}
         for row in rows:
             by_sector.setdefault(row["sector"], []).append(row)
+        leaders: dict[str, str] = {}
+        for sector_name, sector_rows in by_sector.items():
+            ranked = sorted(
+                sector_rows,
+                key=lambda r: r.get("return_1m_pct") if r.get("return_1m_pct") is not None else -float("inf"),
+                reverse=True,
+            )
+            if ranked:
+                leaders[sector_name] = ranked[0]["symbol"]
+                for rank, row in enumerate(ranked, start=1):
+                    row["sector_leader_rank"] = rank
+        filtered: list[dict[str, Any]] = []
+        for row in rows:
+            is_leader = leaders.get(row["sector"]) == row["symbol"]
+            row["is_sector_leader"] = is_leader
+            if is_leader:
+                row["matches"] = list(dict.fromkeys(row["matches"] + ["sector_leaders"]))
+                row["sector_leader_rationale"] = (
+                    f"Top one-month performer in {row['sector']} at "
+                    f"{row.get('return_1m_pct', 0):+.2f}%"
+                )
+            else:
+                row["matches"] = [m for m in row["matches"] if m != "sector_leaders"]
+            # With only sector_leaders selected, return one named leader per
+            # sector. With combined scans, preserve rows matching another scan.
+            if row["matches"]:
+                filtered.append(row)
+        rows = filtered
     rows.sort(key=lambda r: (len(r["matches"]), r.get("quality_score") or 0), reverse=True)
 
     conditions = [

@@ -43,6 +43,52 @@ def payoff_at(legs: list[Leg], spot: float, lot_size: int = 1) -> float:
     return round(total, 2)
 
 
+def research_margin_estimate(legs: list[Leg], spot: float, lot_size: int = 1) -> dict[str, Any]:
+    """Return a conservative, explicitly non-broker margin estimate.
+
+    This is deliberately not called SPAN.  It stress-tests expiry P&L at a wide
+    set of underlying prices and adds a 20% spot notional buffer for short
+    options.  Long-only structures are funded by their premium at risk.  The
+    result is useful for research sizing while remaining honest that an exchange
+    or broker may require a different amount.
+    """
+    contracts = sum(leg.quantity for leg in legs)
+    short_notional = sum(
+        leg.quantity * lot_size * spot for leg in legs if leg.action == "SELL"
+    )
+    stress_spots = [spot * x for x in (0.50, 0.70, 0.85, 1.00, 1.15, 1.30, 1.50)]
+    worst_loss = min(payoff_at(legs, s, lot_size) for s in stress_spots)
+    premium_at_risk = sum(
+        leg.premium * leg.quantity * lot_size for leg in legs if leg.action == "BUY"
+    )
+    # A long option's premium is the cash at risk; short options receive a
+    # premium but need a stress buffer for adverse moves.
+    estimate = max(premium_at_risk, max(0.0, -worst_loss) + short_notional * 0.20)
+    # Only net short call exposure is mathematically unbounded on the upside.
+    # A short call paired with a long call is a defined-risk spread. Put losses
+    # are finite at expiry because the underlying cannot fall below zero.
+    net_call_contracts = sum(
+        (1 if leg.action == "BUY" else -1) * leg.quantity
+        for leg in legs if leg.kind == "CE"
+    )
+    unbounded_short_call = net_call_contracts < 0
+    return {
+        "estimated_margin": round(estimate, 2),
+        "method": "expiry stress grid + 20% short-option spot-notional buffer",
+        "stress_spots": [round(s, 2) for s in stress_spots],
+        "worst_stress_pnl": round(worst_loss, 2),
+        "premium_at_risk": round(premium_at_risk, 2),
+        "short_option_notional": round(short_notional, 2),
+        "unbounded_risk": unbounded_short_call,
+        "warning": (
+            "Research estimate only; not exchange SPAN/Exposure margin. "
+            "Broker requirements, volatility scans, liquidity add-ons, "
+            "calendar spreads and intraday revisions are not modelled."
+        ),
+        "contracts": contracts,
+    }
+
+
 def structure_summary(legs: list[Leg], spot: float, lot_size: int = 1, points: int = 81) -> dict[str, Any]:
     grid = np.linspace(spot * 0.75, spot * 1.25, points)
     pnls = [payoff_at(legs, float(s), lot_size) for s in grid]
@@ -71,6 +117,7 @@ def structure_summary(legs: list[Leg], spot: float, lot_size: int = 1, points: i
             {"spot": round(float(s), 2), "pnl": p} for s, p in zip(grid, pnls)
         ][:: max(1, points // 25)],
         "lot_size": lot_size,
+        "margin_estimate": research_margin_estimate(legs, spot, lot_size),
         "legs": [
             {
                 "action": leg.action,
@@ -95,7 +142,7 @@ class OptionsIntelligenceAgent(BaseAgent):
         limitations = [
             "Research only. F&O ordering is disabled in this build (FNO_ENABLED = FALSE); "
             "the risk agent rejects any F&O proposal.",
-            "Margin requirements are not queried from a broker and are not estimated here.",
+            "Margin is a conservative stress-based research estimate, not broker SPAN/Exposure.",
             "Greeks come from the provider; for demo data they are Black-Scholes values "
             "on a synthetic surface.",
         ]

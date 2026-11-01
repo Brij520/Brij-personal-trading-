@@ -407,7 +407,9 @@ def options_payoff(payload: PayoffRequest):
             **summary,
             "note": (
                 "Payoff is a mathematical construction at expiry. It ignores IV "
-                "changes, assignment, margin and liquidity. F&O execution is disabled."
+                "changes, assignment and liquidity. margin_estimate is a conservative "
+                "research stress estimate, not broker SPAN/Exposure margin. "
+                "F&O execution is disabled."
             ),
         }
     )
