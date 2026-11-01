@@ -1,0 +1,7 @@
+-r requirements.txt
+pytest==8.3.4
+pytest-asyncio==0.25.0
+ruff==0.8.4
+# Optional, used only to validate exported XLSX/PDF in tests:
+openpyxl==3.1.5
+pypdf==5.1.0

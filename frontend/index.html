@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BRIJ TRADING INTELLIGENCE — Research Terminal</title>
+<meta name="description" content="Personal Indian equity research terminal. Research, backtesting and paper trading only. No order placement." />
+<link rel="stylesheet" href="/css/terminal.css" />
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">BTI</span>
+      <span class="brand-text">
+        <strong>BRIJ TRADING INTELLIGENCE</strong>
+        <small>Research Terminal · NSE / BSE</small>
+      </span>
+    </div>
+    <div class="ticker" id="ticker"><span class="ticker-loading">loading market snapshot…</span></div>
+    <div class="topbar-right">
+      <div class="search-wrap">
+        <input id="global-search" type="search" placeholder="Search symbol, company or sector   /"
+               autocomplete="off" spellcheck="false" aria-label="Search instruments" />
+        <div class="search-results" id="search-results" hidden></div>
+      </div>
+      <div class="status-pills" id="status-pills"></div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="rail" id="rail" aria-label="Sections"></nav>
+    <main class="content" id="view"><div class="loading">Initialising terminal…</div></main>
+  </div>
+
+  <footer class="statusbar">
+    <span id="sb-mode">data mode: —</span>
+    <span id="sb-safety">research only · paper trading · no order routing</span>
+    <span id="sb-latency">—</span>
+    <span class="sb-disclaimer">Research and education only. Not investment advice.</span>
+  </footer>
+</div>
+<script src="/js/api.js"></script>
+<script src="/js/charts.js"></script>
+<script src="/js/components.js"></script>
+<script src="/js/pages_market.js"></script>
+<script src="/js/pages_research.js"></script>
+<script src="/js/pages_trading.js"></script>
+<script src="/js/pages_journal.js"></script>
+<script src="/js/pages_system.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
