@@ -65,7 +65,7 @@ Everything below was exercised, not just written. Test counts are from the last 
       fundamentals, technical, valuation, news, options, research, report export, risk limits,
       position size, validation, strategies, backtest run/compare (including unknown strategy →
       422), screener + definitions, journal lifecycle, portfolio import/analysis.
-- [x] **152 tests passing**, `pytest -q`.
+- [x] **155 tests passing**, `pytest -q`.
 
 ### Journal & portfolio (SQLite)
 - [x] Open / close / cancel paper trades; PnL, R-multiple, holding days; double-close rejected.

@@ -10,7 +10,7 @@ is the agent that calls them, attaches context, and reasons in prose.
 
 ```python
 RiskLimits(
-    capital                  = 1_000_000,  # NOT Brij's capital — a placeholder
+    capital                  = 20_000,     # attached ₹20,000 paper portfolio challenge
     max_position_risk_pct    = 2.0,        # risk per trade, % of capital
     max_portfolio_heat_pct   = 6.0,        # sum of open risk, % of capital
     max_single_stock_pct     = 15.0,       # position value, % of capital

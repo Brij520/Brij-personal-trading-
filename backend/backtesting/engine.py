@@ -70,7 +70,7 @@ class Trade:
 
 @dataclass
 class BacktestConfig:
-    initial_capital: float = 1_000_000.0
+    initial_capital: float = 20_000.0
     risk_per_trade_pct: float = 1.0
     max_position_pct: float = 20.0
     costs: CostConfig = field(default_factory=CostConfig)

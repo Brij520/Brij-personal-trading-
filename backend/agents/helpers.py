@@ -24,7 +24,7 @@ def risk_limits_from(ctx: AgentContext) -> RiskLimits:
     return ctx.get(
         "risk_limits",
         lambda: RiskLimits(
-            capital=float(getattr(settings, "capital", 1_000_000.0) or 1_000_000.0),
+            capital=float(getattr(settings, "capital", 20_000.0) or 20_000.0),
             max_position_risk_pct=settings.max_position_risk_pct,
             max_portfolio_heat_pct=settings.max_portfolio_heat_pct,
             max_single_stock_pct=settings.max_single_stock_pct,

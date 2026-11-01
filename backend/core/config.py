@@ -66,6 +66,8 @@ class Settings(BaseSettings):
     http_timeout_seconds: float = 8.0
     cache_ttl_seconds: int = 60 * 30
     historical_years: int = 4
+    #: Default paper/research capital for the attached portfolio challenge.
+    capital: float = 20_000.0
 
     # ---------------------------------------------------------------- limits
     max_position_risk_pct: float = 2.0

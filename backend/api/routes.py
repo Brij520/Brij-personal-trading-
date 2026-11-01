@@ -538,7 +538,7 @@ def position_size(payload: PositionSizeRequest):
 def risk_validate(payload: TradeValidationRequest):
     settings = get_settings()
     limits = RiskLimits(
-        capital=payload.capital or 1_000_000.0,
+        capital=payload.capital or settings.capital,
         max_position_risk_pct=settings.max_position_risk_pct,
         max_portfolio_heat_pct=settings.max_portfolio_heat_pct,
         max_single_stock_pct=settings.max_single_stock_pct,

@@ -5,8 +5,8 @@ and a destroyed account.
 
 ## The procedure
 
-1. **Set capital.** Risk page → capital field. The default ₹10,00,000 is a placeholder. Use the
-   amount you would still be able to function with if it halved.
+1. **Set capital.** Risk page → capital field. The ₹20,000 portfolio challenge is the default
+   paper-capital profile; change it only when you intentionally model a different account.
 2. **Set the stop from the chart, not from the size.** Where is the setup actually wrong? A
    swing low, a structure break, 2× ATR. Not "wherever 2% is".
 3. **Call `POST /api/risk/position-size`** (the Risk page does this): capital, entry, stop.

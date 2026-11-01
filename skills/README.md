@@ -12,6 +12,7 @@ and they assume the platform is running at `http://localhost:8000`.
 | 04 | [Judging a backtest](04-judging-a-backtest.md) | Before believing any strategy. |
 | 05 | [Journal discipline](05-journal-discipline.md) | Weekly, and after every loss. |
 | 06 | [Options research](06-options-research.md) | Before touching any F&O idea. |
+| 07 | [₹20,000 portfolio challenge](07-20000-portfolio-challenge.md) | The full research, scoring, allocation and monitoring workflow. |
 
 ## The three rules that sit above all of them
 

@@ -185,7 +185,7 @@ PAGES.backtest = {
               <select id="bt-strategy">${strategies.strategies.map((s) =>
                 `<option value="${s.key}">${UI.esc(s.name)}</option>`).join('')}</select></div>
             <div class="field"><label>Lookback (bars)</label><input id="bt-lookback" type="number" value="1500" min="300" max="3000" /></div>
-            <div class="field"><label>Capital</label><input id="bt-capital" type="number" value="1000000" /></div>
+            <div class="field"><label>Capital</label><input id="bt-capital" type="number" value="20000" /></div>
             <div class="field"><label>Risk / trade %</label><input id="bt-risk" type="number" value="1" step="0.1" /></div>
             <div class="field"><label>Slippage (bps)</label><input id="bt-slip" type="number" value="5" /></div>
           </div>

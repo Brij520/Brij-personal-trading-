@@ -21,7 +21,7 @@ PAGES.risk = {
         ]), { foot: 'Configurable through BTI_* environment variables.' })}
         ${UI.panel('Position size calculator', `
           <div class="form-row">
-            <div class="field"><label>Capital (INR)</label><input id="ps-capital" type="number" value="500000" /></div>
+            <div class="field"><label>Capital (INR)</label><input id="ps-capital" type="number" value="20000" /></div>
             <div class="field"><label>Entry</label><input id="ps-entry" type="number" step="0.05" value="100" /></div>
             <div class="field"><label>Stop loss</label><input id="ps-stop" type="number" step="0.05" value="95" /></div>
             <div class="field"><label>Risk % of capital</label><input id="ps-risk" type="number" step="0.1" value="1" /></div>
@@ -38,7 +38,7 @@ PAGES.risk = {
             <div class="field"><label>Entry</label><input id="v-entry" type="number" step="0.05" /></div>
             <div class="field"><label>Stop</label><input id="v-stop" type="number" step="0.05" /></div>
             <div class="field"><label>Target</label><input id="v-target" type="number" step="0.05" /></div>
-            <div class="field"><label>Capital</label><input id="v-capital" type="number" value="500000" /></div>
+            <div class="field"><label>Capital</label><input id="v-capital" type="number" value="20000" /></div>
             <div class="field"><label>Open risk %</label><input id="v-openrisk" type="number" value="0" step="0.1" /></div>
             <div class="field"><label>F&amp;O?</label><select id="v-fno"><option value="false">No</option><option value="true">Yes</option></select></div>
           </div>

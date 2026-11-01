@@ -77,7 +77,7 @@ class BacktestRequest(BaseModel):
     symbol: str
     strategy: str
     lookback: int = Field(default=1200, ge=300, le=3000)
-    initial_capital: float = Field(default=1_000_000, gt=0)
+    initial_capital: float = Field(default=20_000, gt=0)
     risk_per_trade_pct: float = Field(default=1.0, gt=0, le=10)
     max_position_pct: float = Field(default=20.0, gt=0, le=100)
     slippage_bps: float = Field(default=5.0, ge=0, le=100)

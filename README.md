@@ -25,12 +25,12 @@ Indian cost model, and a paper-trading journal — behind a dark institutional t
 | 25-section research report → MD / HTML / PDF / CSV / XLSX / JSON | ✅ working | `backend/services/report_generator.py` |
 | Screener with 16 disclosed conditions | ✅ working | `backend/services/market.py` |
 | Backtesting: 8 strategies, costs, slippage, walk-forward, out-of-sample | ✅ working | `backend/backtesting/` |
-| Options research: chain, greeks, PCR, max pain, payoff builder | ✅ working (research) | `backend/agents/options_intelligence.py` |
+| Options research: chain, greeks, PCR, max pain, payoff builder, stress margin estimate | ✅ working (research) | `backend/agents/options_intelligence.py` |
 | Paper trading journal + reviews + discipline checks | ✅ working | `backend/journal/` |
 | Portfolio import and risk analysis | ✅ working | `backend/agents/portfolio_manager.py` |
 | Live NSE/BSE data | ⚠️ **unverified** — no network route here | `backend/data/providers/nse.py` |
 | Real financial-statement ingestion (XBRL) | ❌ not implemented | — |
-| Options margin modelling | ❌ not implemented | — |
+| Broker-grade options margin modelling | ⚠️ research stress estimate only; SPAN/Exposure unavailable | `backend/agents/options_intelligence.py` |
 | Live/automated order execution | ❌ **deliberately absent** | — |
 
 Anything marked ❌ is declared, not faked. See [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md).
@@ -64,7 +64,7 @@ python3 scripts/run.py               # http://localhost:8000
 Open the terminal at `/`, API docs at `/api/docs`. No credentials needed.
 
 ```bash
-pytest -q                            # 152 tests
+pytest -q                            # 155 tests
 node scripts/check_frontend.mjs      # executes all 18 pages against the live API
 ```
 

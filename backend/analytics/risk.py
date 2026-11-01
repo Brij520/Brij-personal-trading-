@@ -34,7 +34,7 @@ Side = Literal["LONG", "SHORT"]
 
 @dataclass
 class RiskLimits:
-    capital: float = 1_000_000.0
+    capital: float = 20_000.0
     max_position_risk_pct: float = 2.0
     max_portfolio_heat_pct: float = 6.0
     max_single_stock_pct: float = 15.0

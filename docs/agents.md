@@ -99,9 +99,9 @@ headline. Synthetic headlines are labelled as such.
 ### 7. `options`
 For F&O-enabled names: chain snapshot, ATM IV, PCR (OI and volume), max pain, OI change at the
 strikes, Black-Scholes greeks, and an ATM straddle cost implying a move. The payoff builder
-handles multi-leg structures and reports breakevens, max profit/loss, and the margin
-requirement as **unknown** (this release does not model SPAN/Exposure margin). Options are
-research only — `fno_enabled` is a hard False, so no F&O order can be constructed.
+handles multi-leg structures and reports breakevens, max profit/loss, and a clearly labelled
+stress-based research margin estimate. This is not SPAN/Exposure margin. Options are research
+only — `fno_enabled` is a hard False, so no F&O order can be constructed.
 
 ### 8. `swing_trading`
 Searches 4–8 week setups (breakout, pullback, base) with a defined entry zone, an
