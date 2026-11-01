@@ -1,0 +1,11 @@
+# Runtime dependencies. Six are required; httpx is optional (live NSE provider only).
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.0
+pandas==2.2.3
+numpy==1.26.4
+
+# Optional — only imported by the live NSE adapter (backend/data/providers/nse.py).
+# Without it, that provider reports ProviderUnavailable and demo mode is unaffected.
+httpx==0.28.1

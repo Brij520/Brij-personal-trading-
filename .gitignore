@@ -1,0 +1,44 @@
+# ---- secrets & local config (never commit) ---------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.secrets
+
+# ---- personal data: the journal holds holdings, trades and mistakes --------
+var/
+*.sqlite3
+*.sqlite3-journal
+research/reports/*
+!research/reports/.gitkeep
+research/historical/*
+!research/historical/.gitkeep
+research/watchlists/*
+!research/watchlists/.gitkeep
+
+# ---- python ----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+
+# ---- node / frontend -------------------------------------------------------
+node_modules/
+.next/
+.npm/
+
+# ---- editors / OS ----------------------------------------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ---- generated exports -----------------------------------------------------
+*.log
